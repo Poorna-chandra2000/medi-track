@@ -1,0 +1,41 @@
+package com.airtribe.meditrack.dto;
+
+import com.airtribe.meditrack.enums.Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class PatientDetailDTO {
+
+    @Column(nullable = false, unique = true, length = 100)
+    @Email(message = "Email should be valid", regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+    private String email;
+
+    @Column(nullable = false, length = 15)
+    private String phone;
+
+
+    @Column(length = 255)
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    Role role;
+
+    @Length(min = 1, max = 50,message = "min length is 50")
+    private String name;
+
+    @Range(min = 1, max = 50)
+    private Integer age;
+
+}
