@@ -1,6 +1,7 @@
 package com.airtribe.meditrack.entities;
 
 import com.airtribe.meditrack.enums.Specialist;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -36,6 +37,7 @@ public class Doctor extends Person{
     private Double consultationFee=500.0;
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<Appointment> appointments;
 
 }

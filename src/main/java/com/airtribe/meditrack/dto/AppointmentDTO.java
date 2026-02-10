@@ -5,40 +5,44 @@ import com.airtribe.meditrack.entities.Patient;
 import com.airtribe.meditrack.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "doctor_id", nullable = false)
+
     Doctor doctor;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "patient_id", nullable = false)
+
     Patient patient;
 
-    @NotNull
+
     private LocalDate startDate;
 
-    @NotNull
+
     private LocalTime startTime;
 
-    @NotNull
+
     private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
     AppointmentStatus status;
 
     @Lob
-    private String observations;
+    private String patientSymptoms;
 
+    @Lob
+    private String docObservations;
 
+    private Double PaymentAmount;
+
+    private String CancellationReason;
 }

@@ -45,7 +45,10 @@ public class Appointment {
     AppointmentStatus status=AppointmentStatus.PAYMENT_PENDING;
 
     @Lob
-    private String observations;
+    private String patientSymptoms;
+
+    @Lob
+    private String docObservations;
 
     private Double PaymentAmount;
 

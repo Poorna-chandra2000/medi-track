@@ -14,8 +14,8 @@ import java.util.List;
 public interface AppointmentRepo extends JpaRepository<Appointment,Long> {
     @Query("""
             select a from Appointment a
-            where a.startDate = :startDate
-            and ((:startTime<a.endDate and :endTime >a.startTime))
+            where a.doctor.id = :docId and a.startDate = :startDate
+            and ((:startTime<a.endTime) and (:endTime >a.startTime))
             """)
-    List<Appointment> findConflictsInAppointment(@NotNull LocalDate startDate, @NotNull LocalTime startTime, @NotNull LocalTime endTime);
+    List<Appointment> findConflictsInAppointment(Long docId,@NotNull LocalDate startDate, @NotNull LocalTime startTime, @NotNull LocalTime endTime);
 }
