@@ -1,24 +1,17 @@
-package com.airtribe.meditrack.entities;
+package com.airtribe.meditrack.dto;
 
+import com.airtribe.meditrack.entities.Doctor;
+import com.airtribe.meditrack.entities.Patient;
 import com.airtribe.meditrack.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.boot.SpringBootVersion;
-import org.springframework.core.SpringVersion;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class Appointment {
+public class AppointmentDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,12 +35,10 @@ public class Appointment {
     private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
-    AppointmentStatus status=AppointmentStatus.PAYMENT_PENDING;
+    AppointmentStatus status;
 
     @Lob
     private String observations;
 
-    private Double PaymentAmount;
 
-    private String CancellationReason;
 }

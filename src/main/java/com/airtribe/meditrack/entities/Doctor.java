@@ -32,6 +32,9 @@ public class Doctor extends Person{
     @Enumerated(EnumType.STRING)
     private Specialist specialist;
 
+    @Column(nullable = false)
+    private Double consultationFee=500.0;
+
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Appointment> appointments;
 

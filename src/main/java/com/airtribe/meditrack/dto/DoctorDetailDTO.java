@@ -33,6 +33,9 @@ public class DoctorDetailDTO {
     @Enumerated(EnumType.STRING)
     Role role;
 
+    @Column(nullable = false)
+    private Double consultationFee;
+
     @Enumerated(EnumType.STRING)
     private Specialist specialist;
 

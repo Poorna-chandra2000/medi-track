@@ -7,7 +7,6 @@ import com.airtribe.meditrack.entities.Patient;
 import com.airtribe.meditrack.entities.Person;
 import com.airtribe.meditrack.repositories.PersonRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +25,9 @@ public class PersonController {
                     .phone(dto.getPhone())
                     .address(dto.getAddress())
                     .role(dto.getRole())
+                    .consultationFee(dto.getConsultationFee())
                     .specialist(dto.getSpecialist())
-                    .isAvailable(false)
+                    .isAvailable(true)
                     .build();
                 Person person  = personRepository.save(doctor);
                 return ResponseEntity.ok(person);
@@ -46,8 +46,5 @@ public class PersonController {
         Person person  = personRepository.save(patient);
         return ResponseEntity.ok(person);
     }
-
-
-
 
 }
