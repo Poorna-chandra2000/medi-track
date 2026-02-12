@@ -50,7 +50,7 @@ public class Appointment {
     @Lob
     private String docObservations;
 
-    private Double PaymentAmount;
+    private Double paymentAmount;
 
-    private String CancellationReason;
+    private String cancellationReason;
 }

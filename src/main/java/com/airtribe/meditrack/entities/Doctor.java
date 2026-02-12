@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -39,5 +41,13 @@ public class Doctor extends Person{
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     private List<Appointment> appointments;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(columnDefinition = "vector(768)")
+    @JdbcTypeCode(SqlTypes.VECTOR)
+    private float[] embedding;
+
 
 }

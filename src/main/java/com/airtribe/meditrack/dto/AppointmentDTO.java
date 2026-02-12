@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class AppointmentDTO {
 
-
+    Long id;
 
     Doctor doctor;
 
@@ -42,7 +42,7 @@ public class AppointmentDTO {
     @Lob
     private String docObservations;
 
-    private Double PaymentAmount;
+    private Double paymentAmount;
 
-    private String CancellationReason;
+    private String cancellationReason;
 }

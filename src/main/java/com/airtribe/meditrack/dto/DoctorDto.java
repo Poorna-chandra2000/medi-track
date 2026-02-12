@@ -20,4 +20,8 @@ public class DoctorDto {
     private Role role;
 
     private Specialist specialist;
+
+    private String description;
+
+    private String consultationFee;
 }

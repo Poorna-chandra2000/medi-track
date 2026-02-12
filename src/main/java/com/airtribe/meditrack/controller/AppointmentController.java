@@ -2,7 +2,9 @@ package com.airtribe.meditrack.controller;
 
 import com.airtribe.meditrack.dto.AppointmentDTO;
 import com.airtribe.meditrack.dto.DocObservationDto;
+import com.airtribe.meditrack.dto.PaymentDto;
 import com.airtribe.meditrack.entities.Appointment;
+import com.airtribe.meditrack.entities.Payment;
 import com.airtribe.meditrack.services.AppointmentService;
 import io.micrometer.core.ipc.http.HttpSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,9 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.getAppointmentById(id));
     }
 
-    @GetMapping("/appointments/{id}/confirm")
-    public ResponseEntity<String> confirmAppointment(@PathVariable Long id, @RequestParam Double amount) {
-        return ResponseEntity.ok(appointmentService.confirmAppointment(id, amount));
+    @PostMapping("/appointments/{appointid}/confirm")
+    public ResponseEntity<String> confirmAppointment(@PathVariable Long appointid, @RequestBody PaymentDto paymentDto) {
+        return ResponseEntity.ok(appointmentService.confirmAppointment(appointid, paymentDto));
     }
 
     @GetMapping("/appointments/{id}/cancel")

@@ -1,5 +1,5 @@
 package com.airtribe.meditrack.dto;
-import jakarta.persistence.Lob;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DocObservationDto {
+public class PaymentDto {
 
-    @Lob
-    private String docObservations;
+
+    String paymentType;
+
+    Double paymentAmount;
 }
