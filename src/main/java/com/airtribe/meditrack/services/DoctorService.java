@@ -3,17 +3,20 @@ package com.airtribe.meditrack.services;
 import com.airtribe.meditrack.dto.DoctorAppointmentCount;
 import com.airtribe.meditrack.dto.DoctorDto;
 import com.airtribe.meditrack.entities.Doctor;
+import com.airtribe.meditrack.enums.Specialist;
 import com.airtribe.meditrack.repositories.DoctorRepo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class DoctorService {
     private final DoctorRepo doctorRepo;
     private final ModelMapper modelMapper;
@@ -68,8 +71,8 @@ public class DoctorService {
     }
 
 
-    public List<DoctorDto> searchBySpecialization(String query) {
-        List<Doctor> doctors = doctorRepo.findBySpecialistContainingIgnoreCase(query);
+    public List<DoctorDto> searchBySpecialization(Specialist specialist) {
+        List<Doctor> doctors = doctorRepo.findBySpecialist(specialist);
 
         if (doctors.isEmpty()) {
             return new ArrayList<>();
@@ -136,7 +139,10 @@ public class DoctorService {
             map.put("averageFee", averageFee);
             return map;
         })//Sort by specialization alphabetically
-                .sorted(Comparator.comparing(m -> (String) m.get("Specialization")))
+                .sorted(Comparator.comparing(
+                        m -> ((Specialist) m.get("Specialization")).name()
+                ))
+
                 .collect(Collectors.toList());
     }
 }

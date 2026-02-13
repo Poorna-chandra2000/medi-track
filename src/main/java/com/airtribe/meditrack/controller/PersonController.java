@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,52 +23,39 @@ import java.util.stream.Collectors;
 
 public class PersonController {
 
+    private final PersonService personService;
     private final PersonRepository personRepository;
 
     private final EmbeddingModel embeddingModel;
 
     // Manual constructor to resolve the ambiguity
     public PersonController(
-            PersonRepository personRepository,
+            PersonService personService, PersonRepository personRepository,
             @Qualifier("ollamaEmbeddingModel") EmbeddingModel embeddingModel) {
+        this.personService = personService;
         this.personRepository = personRepository;
         this.embeddingModel = embeddingModel;
     }
 
-        @PostMapping("/register/doc")
-        ResponseEntity<Person> createDoc(@RequestBody DoctorDetailDTO dto) {
-            Doctor doctor = Doctor.builder()
-                    .name(dto.getName())            // goes to doctor table
-                    .email(dto.getEmail())
-                    .phone(dto.getPhone())
-                    .address(dto.getAddress())
-                    .role(dto.getRole())
-                    .consultationFee(dto.getConsultationFee())
-                    .specialist(dto.getSpecialist())
-                    .description(dto.getDescription())
-                    .isAvailable(true)
-                    .build();
+    @PostMapping("/register/doc")
+    ResponseEntity<Person> createDoc(@RequestBody DoctorDetailDTO dto) {
 
-            // Generate embedding - added String.valueOf to prevent NullPointer if specialist is missing
-            String textToEmbed = String.valueOf(doctor.getSpecialist()) + " " + doctor.getDescription();
-            float[] vector = embeddingModel.embed(textToEmbed);
-
-                Person person  = personRepository.save(doctor);
-                return ResponseEntity.ok(person);
-        }
+        return ResponseEntity.ok(personService.createDoctor(dto));
+    }
 
     @PostMapping("/register/patient")
     ResponseEntity<Person> createPatient(@RequestBody PatientDetailDTO dto) {
-        Patient patient = Patient.builder()
-                .name(dto.getName())            // goes to doctor table
-                .email(dto.getEmail())
-                .phone(dto.getPhone())
-                .address(dto.getAddress())
-                .role(dto.getRole())
-                .age(dto.getAge())
-                .build();
-        Person person  = personRepository.save(patient);
-        return ResponseEntity.ok(person);
+
+       return ResponseEntity.ok(personService.createPatient(dto));
+
+    }
+
+
+    //admin only
+    @PostMapping("/register/addAllDoc")
+    ResponseEntity<String> createDoc(@RequestBody List<DoctorDetailDTO> dto) {
+
+        return ResponseEntity.ok(personService.addAllDoc(dto));
     }
 
 }

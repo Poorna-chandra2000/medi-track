@@ -31,4 +31,6 @@ public class AiConfig {
     public ChatClient ollamaChatClient(OllamaChatModel ollamaChatModel) {
         return ChatClient.builder(ollamaChatModel).build();
     }
+
+
 }

@@ -17,12 +17,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class AppointmentDTO {
 
-    Long id;
+    private Long id;
 
-    Doctor doctor;
+    private Doctor doctor;
 
 
-    Patient patient;
+    private Patient patient;
 
 
     private LocalDate startDate;
@@ -34,12 +34,12 @@ public class AppointmentDTO {
     private LocalTime endTime;
 
     @Enumerated(EnumType.STRING)
-    AppointmentStatus status;
+    private AppointmentStatus status;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String patientSymptoms;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String docObservations;
 
     private Double paymentAmount;

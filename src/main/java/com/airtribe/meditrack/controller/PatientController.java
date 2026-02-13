@@ -3,6 +3,7 @@ package com.airtribe.meditrack.controller;
 import com.airtribe.meditrack.dto.PatientDto;
 import com.airtribe.meditrack.entities.Patient;
 import com.airtribe.meditrack.repositories.PatientRepo;
+import com.airtribe.meditrack.services.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -21,30 +22,20 @@ public class PatientController {
     private final PatientRepo patientRepo;
     private final ModelMapper modelMapper;
 
+    private final PatientService patientService;
+
     @GetMapping("/patients/{id}")
-    public ResponseEntity<PatientDto> getPatientsByID(@PathVariable Integer id) {
+    public ResponseEntity<PatientDto> getPatientsByID(@PathVariable Long id) {
 
+        return ResponseEntity.ok(patientService.getPatientById(id));
 
-        Optional<Patient> patient = patientRepo.findById(id.longValue());
-
-        if (patient.isPresent()) {
-            return ResponseEntity.ok(modelMapper.map(patient.get(), PatientDto.class));
-        }
-        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/patients")
     public ResponseEntity<List<PatientDto>> getAllPatient() {
 
 
-        List<Patient> patient = patientRepo.findAll();
-
-        if (!patient.isEmpty()) {
-            return ResponseEntity.ok(patient.stream()
-                    .map(p->modelMapper.map(p,PatientDto.class))
-                    .collect(Collectors.toList()));
-        }
-        return ResponseEntity.notFound().build();
+       return ResponseEntity.ok(patientService.getAllPatient());
     }
 
 }

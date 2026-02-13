@@ -5,11 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
-@RestController
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 
@@ -17,7 +18,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
 
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .status(Integer.parseInt(HttpStatus.MULTI_STATUS.getReasonPhrase()))
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .message(ex.getMessage())
                 .timestamp(System.currentTimeMillis()).build();
 
@@ -26,11 +27,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AppointmentNotFoundException.class)
-    ResponseEntity<ErrorResponse> AppointmentNotFound(String message) {
+    ResponseEntity<ErrorResponse> AppointmentNotFound(AppointmentNotFoundException ex) {
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
-                .message(message)
+                .message(ex.getMessage())
                 .timestamp(System.currentTimeMillis()).build();
 
         return ResponseEntity.status(404).body(errorResponse);
@@ -53,6 +54,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     ResponseEntity<ErrorResponse> ResourceNotFound(ResourceNotFoundException ex) {
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .timestamp(System.currentTimeMillis()).build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    ResponseEntity<ErrorResponse> ResourceNotFound(RuntimeException ex) {
 
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())

@@ -12,10 +12,4 @@ public class UpiPayment implements PaymentStrategy {
         return true;
     }
 
-    @Override
-    public Boolean verifyPayment(String paymentId, String customerId) {
-        // Implement UPI payment verification logic here
-        System.out.println("Verifying UPI payment with ID: " + paymentId + " for customer: " + customerId);
-        return true; // Assuming verification is successful for demonstration
-    }
 }

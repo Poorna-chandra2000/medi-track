@@ -1,5 +1,6 @@
 package com.airtribe.meditrack.dto;
 
+import com.airtribe.meditrack.enums.BillType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,10 @@ import lombok.NoArgsConstructor;
 public class PaymentDto {
 
 
-    String paymentType;
+    private String paymentType;
 
-    Double paymentAmount;
+    private Double paymentAmount;
+
+    private BillType billType;
+
 }

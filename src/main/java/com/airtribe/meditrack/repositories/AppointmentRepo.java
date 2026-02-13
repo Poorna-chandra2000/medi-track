@@ -18,4 +18,7 @@ public interface AppointmentRepo extends JpaRepository<Appointment,Long> {
             and ((:startTime<a.endTime) and (:endTime >a.startTime))
             """)
     List<Appointment> findConflictsInAppointment(Long docId,@NotNull LocalDate startDate, @NotNull LocalTime startTime, @NotNull LocalTime endTime);
+
+
+    List<Appointment> findByDoctorIdAndStartDate(Long doctorId, LocalDate date);
 }

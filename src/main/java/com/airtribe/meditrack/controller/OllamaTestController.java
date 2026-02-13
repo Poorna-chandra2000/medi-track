@@ -17,11 +17,28 @@ public class OllamaTestController {
         this.ollamaChatClient = ollamaChatClient;
     }
 
-    @GetMapping("/test-ollama")
-    public String testOllama(@RequestParam(defaultValue = "Hello, who are you?") String message) {
+    @GetMapping("/ai-suggest-specialist")
+    public String testOllama(@RequestParam(defaultValue = "Hello, who are you?") String symptoms) {
         // Use the pre-injected client directly
-        return ollamaChatClient.prompt()
-                .user(message)
+
+        String systemPrompt = """
+You are a medical triage assistant.
+Based on the user symptoms, suggest ONLY ONE doctor specialist type even multiple if required.
+and also suggest the most likely diagnosis based on the symptoms.
+
+Return ONLY one value from this list:
+CARDIOLOGIST, DERMATOLOGIST, NEUROLOGIST, PEDIATRICIAN, ORTHOPEDIC,
+GYNECOLOGIST, PSYCHIATRIST, ENDOCRINOLOGIST, ONCOLOGIST,
+GASTROENTEROLOGIST, PULMONOLOGIST, RHEUMATOLOGIST, UROLOGIST,
+HEMATOLOGIST, INFECTIOUS_DISEASE_SPECIALIST, ALLERGIST,
+IMMUNOLOGIST, NEPHROLOGIST, OTOLARYNGOLOGIST, OPHTHALMOLOGIST,
+DENTIST, GENERAL_PRACTITIONER
+
+Return the enum word. and explain your reasoning in 4 line paragraph.
+""";
+
+        return ollamaChatClient.prompt(systemPrompt)
+                .user(symptoms)
                 .call()
                 .content();
     }

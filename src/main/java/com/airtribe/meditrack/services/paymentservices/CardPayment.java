@@ -12,10 +12,4 @@ public class CardPayment implements PaymentStrategy {
         return true;
     }
 
-    @Override
-    public Boolean verifyPayment(String paymentId, String customerId) {
-        // Implement card payment verification logic here
-        System.out.println("Verifying card payment with ID: " + paymentId + " for customer: " + customerId);
-        return true; // Assuming verification is successful for demonstration
-    }
 }

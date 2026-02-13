@@ -2,6 +2,7 @@ package com.airtribe.meditrack.controller;
 import com.airtribe.meditrack.dto.DoctorAppointmentCount;
 import com.airtribe.meditrack.dto.DoctorDto;
 import com.airtribe.meditrack.entities.Doctor;
+import com.airtribe.meditrack.enums.Specialist;
 import com.airtribe.meditrack.repositories.DoctorRepo;
 import com.airtribe.meditrack.services.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +47,8 @@ public class DoctorController {
 
 
     @GetMapping("/searchBySpecialization")
-    public ResponseEntity<List<DoctorDto>> searchDoctors(@RequestParam String query) {
-        return new ResponseEntity<>(doctorService.searchBySpecialization(query), HttpStatus.OK);
+    public ResponseEntity<List<DoctorDto>> searchDoctors(@RequestParam Specialist specialist) {
+        return new ResponseEntity<>(doctorService.searchBySpecialization(specialist), HttpStatus.OK);
     }
 
     @GetMapping("getAppointmentCountByDoctor")

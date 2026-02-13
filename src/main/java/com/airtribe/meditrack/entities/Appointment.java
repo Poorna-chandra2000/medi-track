@@ -44,10 +44,10 @@ public class Appointment {
     @Enumerated(EnumType.STRING)
     AppointmentStatus status=AppointmentStatus.PAYMENT_PENDING;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String patientSymptoms;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String docObservations;
 
     private Double paymentAmount;

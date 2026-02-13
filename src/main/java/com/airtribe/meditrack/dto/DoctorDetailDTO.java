@@ -25,7 +25,7 @@ public class DoctorDetailDTO {
 
     private String address;
 
-    Role role;
+    private Role role;
 
     private Double consultationFee;
 
