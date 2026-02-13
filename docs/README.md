@@ -677,7 +677,7 @@ This project is part of an educational assignment.
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Poorna Chandra S
 
 ## 🙏 Acknowledgments
 
